@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "tool": "check_inequality",
+  "arguments": {
+    "bound": "2"
+  },
+  "result": {
+    "status": "CERTIFIED_SHARP_INEQUALITY",
+    "evidence_type": "exact_inequality_certificate",
+    "verification": {
+      "status": "CERTIFIED_SHARP_INEQUALITY",
+      "bound": "2",
+      "domain_nonnegative_assumptions": 0,
+      "historical_novelty": "UNREVIEWED",
+      "sharpness": "PROVED_BY_EXACT_ADMISSIBLE_WITNESS"
+    },
+    "certificate": {
+      "schema_version": 2,
+      "kind": "sos_inequality",
+      "domain": "RR",
+      "statement": {
+        "id": "sharp-quadratic",
+        "kind": "inequality",
+        "variables": [
+          "x",
+          "y"
+        ],
+        "polynomial": "5*x**2+6*x*y+5*y**2",
+        "reference": "x**2+y**2",
+        "square_degree": 1,
+        "optimize": true
+      },
+      "bound": "2",
+      "squares": [
+        {
+          "weight": "3",
+          "polynomial": "1 * y + 1 * x",
+          "assumptions": []
+        }
+      ],
+      "historical_novelty": "UNREVIEWED",
+      "equality_witness": [
+        "-1",
+        "1"
+      ]
+    },
+    "formula": "5x² + 6xy + 5y² ≥ λ(x² + y²)",
+    "explanation": "At λ=2 the residual is 3(x+y)²; (-1,1) attains equality, so the constant is sharp.",
+    "domain": "All real x and y. The equality witness has nonzero reference value.",
+    "scope": "This tool checks the displayed quadratic control, not arbitrary inequalities."
+  },
+  "engine_sha256": {
+    "proofdesk/math_tools.py": "e817959a028b14749c44235fb95b7a782dec2c546c6786270a3a4a0447c35d1f",
+    "vendor/noetherforge/proofcheck.py": "70ad1879594771576764e31729eb003e78873310dddf6792c1ffefae641478b7",
+    "vendor/noetherforge/verifier.py": "631e084f8c43fe43a8c7158af3b939f797809d92d3e25b07f4580b12f9a683dc",
+    "vendor/noetherforge/rational.py": "503061e74519069d76d70ace0fc3ba0f8675f12e3349e487f3d92eb4f355760b",
+    "vendor/noetherforge/algebra.py": "859619f39ad542608d3d630279ce79c47ae88bd5296814ea0a999334c9f3d2a8",
+    "examples/sharp-quadratic-certificate.json": "c85883fa4964c48421702a6c66123b32f39e3c2f611d5288c9a84f33ccb2e054"
+  },
+  "receipt_id": "80078c463133100846621007446e47cfeb8edae8180dbfb55fc84e5a42596006"
+}

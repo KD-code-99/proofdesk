@@ -1,0 +1,16 @@
+test_affine_against_direct_iteration (test_math.MathematicsTests.test_affine_against_direct_iteration) ... ok
+test_conserved_rational_quantity (test_math.MathematicsTests.test_conserved_rational_quantity) ... ok
+test_counterexample_is_admissible_and_reproduces (test_math.MathematicsTests.test_counterexample_is_admissible_and_reproduces) ... ok
+test_fibonacci_against_independent_direct_iteration (test_math.MathematicsTests.test_fibonacci_against_independent_direct_iteration) ... ok
+test_parameter_only_is_not_discovery (test_math.MathematicsTests.test_parameter_only_is_not_discovery) ... ok
+test_receipt_detects_tampering_and_replays (test_math.MathematicsTests.test_receipt_detects_tampering_and_replays) ... ok
+test_rejects_code_floats_and_unbounded_integer_output (test_math.MathematicsTests.test_rejects_code_floats_and_unbounded_integer_output) ... ok
+test_sharp_bound_and_invalid_certificate (test_math.MathematicsTests.test_sharp_bound_and_invalid_certificate) ... ok
+test_browser_receipt_replay_and_origin_refusal (test_math.TransportTests.test_browser_receipt_replay_and_origin_refusal) ... ok
+test_initialize_list_and_real_tool_call (test_math.TransportTests.test_initialize_list_and_real_tool_call) ... ok
+test_notification_and_unknown_method (test_math.TransportTests.test_notification_and_unknown_method) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 1.522s
+
+OK

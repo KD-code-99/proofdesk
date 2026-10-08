@@ -1,0 +1,152 @@
+{
+  "schema_version": 2,
+  "kind": "rational_invariant",
+  "domain": "QQ",
+  "goal": {
+    "id": "lyness-symbolic",
+    "kind": "rational_recurrence",
+    "variables": [
+      "x",
+      "y",
+      "a"
+    ],
+    "transitions": [
+      "y",
+      "(a+y)/x",
+      "a"
+    ],
+    "max_degree": 3,
+    "max_denominator_degree": 2,
+    "parameters": [
+      "a"
+    ],
+    "guards": [],
+    "sources": []
+  },
+  "map_hash": "72143ead46bf0237a4c8fa38829f451dabc0de18d04c4dcefe5e7f89db2baf7c",
+  "numerator": [
+    {
+      "powers": [
+        0,
+        0,
+        1
+      ],
+      "coefficient": "1"
+    },
+    {
+      "powers": [
+        0,
+        1,
+        0
+      ],
+      "coefficient": "1"
+    },
+    {
+      "powers": [
+        1,
+        0,
+        0
+      ],
+      "coefficient": "1"
+    },
+    {
+      "powers": [
+        0,
+        1,
+        1
+      ],
+      "coefficient": "1"
+    },
+    {
+      "powers": [
+        0,
+        2,
+        0
+      ],
+      "coefficient": "1"
+    },
+    {
+      "powers": [
+        1,
+        0,
+        1
+      ],
+      "coefficient": "1"
+    },
+    {
+      "powers": [
+        2,
+        0,
+        0
+      ],
+      "coefficient": "1"
+    },
+    {
+      "powers": [
+        1,
+        2,
+        0
+      ],
+      "coefficient": "1"
+    },
+    {
+      "powers": [
+        2,
+        1,
+        0
+      ],
+      "coefficient": "1"
+    }
+  ],
+  "denominator": [
+    {
+      "powers": [
+        1,
+        1,
+        0
+      ],
+      "coefficient": "1"
+    }
+  ],
+  "required_nonzero_guards": [
+    [
+      {
+        "powers": [
+          0,
+          1,
+          1
+        ],
+        "coefficient": "1"
+      },
+      {
+        "powers": [
+          0,
+          2,
+          0
+        ],
+        "coefficient": "1"
+      }
+    ],
+    [
+      {
+        "powers": [
+          1,
+          0,
+          0
+        ],
+        "coefficient": "1"
+      }
+    ],
+    [
+      {
+        "powers": [
+          1,
+          1,
+          0
+        ],
+        "coefficient": "1"
+      }
+    ]
+  ],
+  "historical_novelty": "UNREVIEWED"
+}

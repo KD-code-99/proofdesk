@@ -1,0 +1,113 @@
+{
+  "repository": "https://github.com/KD-code-99/NOETHER-FORGE",
+  "local_commit": "17e9ecdbd6efecd35733407ad09ab74fa96919b4",
+  "license": "Apache-2.0",
+  "scope": "Original package source only; no manuscript corpus, credentials or local state. Hashes reflect copied working-tree bytes.",
+  "files": [
+    {
+      "source_path": "noetherforge/__init__.py",
+      "published_path": "vendor/noetherforge/__init__.py",
+      "sha256": "b29dca2a1a59217f872c84c2dc2272a60c2c8c6000270da959298b967beb807a"
+    },
+    {
+      "source_path": "noetherforge/__main__.py",
+      "published_path": "vendor/noetherforge/__main__.py",
+      "sha256": "90a1dd9c3c9b95daae298f428f25ca0b5af5fd1f53275693c41348741562a1f2"
+    },
+    {
+      "source_path": "noetherforge/algebra.py",
+      "published_path": "vendor/noetherforge/algebra.py",
+      "sha256": "859619f39ad542608d3d630279ce79c47ae88bd5296814ea0a999334c9f3d2a8"
+    },
+    {
+      "source_path": "noetherforge/atlas.py",
+      "published_path": "vendor/noetherforge/atlas.py",
+      "sha256": "a68226c783fd2138fefb0fce8a8141eb6ea113989e32942c4865c50976df9e54"
+    },
+    {
+      "source_path": "noetherforge/audit.py",
+      "published_path": "vendor/noetherforge/audit.py",
+      "sha256": "9f5bd4998e023d9a1b197e6dd677e32e4704bef2204f821ba4fb51925c9e75fc"
+    },
+    {
+      "source_path": "noetherforge/benchmark.py",
+      "published_path": "vendor/noetherforge/benchmark.py",
+      "sha256": "0ff84ea08257aa974eea41e93ad016aade63cdbb5f5ee44b6828ccd66fe042e5"
+    },
+    {
+      "source_path": "noetherforge/corpus.py",
+      "published_path": "vendor/noetherforge/corpus.py",
+      "sha256": "c8316adcac63a860ed711e1d81180fd6a1ca8f7bdec9b25b343a17c379828d07"
+    },
+    {
+      "source_path": "noetherforge/engine.py",
+      "published_path": "vendor/noetherforge/engine.py",
+      "sha256": "8937ca1cb57f07a15b18ef8f1f27d98ca5f970b7844a712a9763ec4733da1966"
+    },
+    {
+      "source_path": "noetherforge/evolution.py",
+      "published_path": "vendor/noetherforge/evolution.py",
+      "sha256": "a9a51c5ea377bcc31fd02751dc812459b9c71636b8b32c6c03a056743f325748"
+    },
+    {
+      "source_path": "noetherforge/frontier_benchmark.py",
+      "published_path": "vendor/noetherforge/frontier_benchmark.py",
+      "sha256": "5aa51820ebe440d59ac96a40d20d4a2f940d8dd531027e7db8a615e05b5a9efe"
+    },
+    {
+      "source_path": "noetherforge/frontier_replay.py",
+      "published_path": "vendor/noetherforge/frontier_replay.py",
+      "sha256": "530ed9a9f5eebd0790a8c76c6c62d1608dedf14ae683e05ac36f47780918f74b"
+    },
+    {
+      "source_path": "noetherforge/goals.py",
+      "published_path": "vendor/noetherforge/goals.py",
+      "sha256": "b2ec1d9cc3538b4e94d1df156e909077fc3563996d27760bf8eca6a90fa7622d"
+    },
+    {
+      "source_path": "noetherforge/inequalities.py",
+      "published_path": "vendor/noetherforge/inequalities.py",
+      "sha256": "a1be6c159ba9276734f652b7386de69bd20126f9a1725a2467836793918dd7a0"
+    },
+    {
+      "source_path": "noetherforge/laboratory.py",
+      "published_path": "vendor/noetherforge/laboratory.py",
+      "sha256": "07ff24b1a52b7782b8445f3250b98f831d560b20a8eb891f0daf01d9ad9dabdd"
+    },
+    {
+      "source_path": "noetherforge/ledger.py",
+      "published_path": "vendor/noetherforge/ledger.py",
+      "sha256": "a2c89a1933f47f648fb48ba45db9d8b9aa9581c4165b41563e79627eaaf51412"
+    },
+    {
+      "source_path": "noetherforge/novelty.py",
+      "published_path": "vendor/noetherforge/novelty.py",
+      "sha256": "00ed9a087f8aa833bbd4cd4fbc51b912b5530b74eb5c665ca931456a58e97a4c"
+    },
+    {
+      "source_path": "noetherforge/proofcheck.py",
+      "published_path": "vendor/noetherforge/proofcheck.py",
+      "sha256": "70ad1879594771576764e31729eb003e78873310dddf6792c1ffefae641478b7"
+    },
+    {
+      "source_path": "noetherforge/rational.py",
+      "published_path": "vendor/noetherforge/rational.py",
+      "sha256": "503061e74519069d76d70ace0fc3ba0f8675f12e3349e487f3d92eb4f355760b"
+    },
+    {
+      "source_path": "noetherforge/recheck.py",
+      "published_path": "vendor/noetherforge/recheck.py",
+      "sha256": "9b39e25715ab4099b85fafeffd36f35aa1c230112b129727528a52d67cb944a4"
+    },
+    {
+      "source_path": "noetherforge/release_audit.py",
+      "published_path": "vendor/noetherforge/release_audit.py",
+      "sha256": "9f6260c44b6529d84e878c98ed4ee0b97072ce29c199fb93b67cac8842c302e3"
+    },
+    {
+      "source_path": "noetherforge/verifier.py",
+      "published_path": "vendor/noetherforge/verifier.py",
+      "sha256": "631e084f8c43fe43a8c7158af3b939f797809d92d3e25b07f4580b12f9a683dc"
+    }
+  ]
+}

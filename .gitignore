@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.state/
+.env
+.env.*
+!.env.example
+*.egg-info/
+dist/
+build/
+.devpost-hackathon-state.json
+
+/media/page@*.webm
+/media/narration.wav

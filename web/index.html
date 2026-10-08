@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>ProofDesk — answers you can check</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<header><a class="wordmark" href="/" aria-label="ProofDesk home"><span class="mark">∴</span> proofdesk</a><span class="header-note">A mathematical workbench for your assistant</span><span class="connection"><i></i> Local engine</span></header>
+<main>
+<aside class="sidebar">
+<div class="eyebrow">YOUR WORKBENCH</div><h1>Ask a question.<br>Keep the evidence.</h1><p class="intro">Exact computations, checked identities, and counterexamples you can reproduce.</p>
+<nav aria-label="Mathematical workflows">
+<button class="workflow active" data-mode="invariant"><span>01</span><strong>Conservation laws</strong><small>Does a quantity stay constant?</small></button>
+<button class="workflow" data-mode="recurrence"><span>02</span><strong>Long recurrences</strong><small>Jump directly to a future state</small></button>
+<button class="workflow" data-mode="inequality"><span>03</span><strong>Sharp inequalities</strong><small>Inspect a bound and its witness</small></button>
+</nav>
+<div class="integration"><div class="eyebrow">ASSISTANT CONNECTION</div><code>http://127.0.0.1:4186/mcp</code><p>Connect an MCP client, or try the simulated Alexa+ experience here. This local interface uses explicit tool routing.</p><a href="https://amazonappdev2026.devpost.com/" target="_blank" rel="noreferrer">Built for Amazon’s Alexa+ track ↗</a></div>
+</aside>
+<section class="workspace" aria-label="Question and mathematical result">
+<div class="workspace-top"><span class="eyebrow">SIMULATED ALEXA+ EXPERIENCE</span><span class="scope-tag">Evidence before confidence</span></div>
+<div class="question-card"><div class="avatar">∴</div><div><h2 id="question-title">Find what stays constant.</h2><p id="question-description">The Lyness map changes x and y. We can check whether a proposed quantity survives every step.</p></div></div>
+<form id="math-form">
+<div id="invariant-fields" class="fields"><div class="field-pair"><label>Variables<input id="variables" value="x, y, a" autocomplete="off"></label><label>Fixed parameters<input id="parameters" value="a" autocomplete="off"></label></div><label>Next state, one expression per line<textarea id="transitions" rows="3" spellcheck="false">y
+(a+y)/x
+a</textarea></label><div class="field-pair"><label>Numerator<input id="numerator" value="(x+1)*(y+1)*(x+y+a)" spellcheck="false"></label><label>Denominator<input id="denominator" value="x*y" spellcheck="false"></label></div><div class="presets"><span>Try a hypothesis</span><button type="button" id="valid-preset">A conserved quantity</button><button type="button" id="invalid-preset">An incorrect guess: x+y</button></div></div>
+<div id="recurrence-fields" class="fields" hidden><div class="field-pair"><label>Recurrence<select id="family"><option value="fibonacci">Fibonacci</option><option value="affine">Affine map</option></select></label><label>Modulus<input id="modulus" value="1000000007" inputmode="numeric"></label></div><label>Number of steps<input id="steps" value="1000000000000000000000000000000" inputmode="numeric"></label><p class="field-note">Exact modular arithmetic keeps the result small. The shortcut applies to this structured recurrence.</p></div>
+<div id="inequality-fields" class="fields" hidden><div class="formula">5x² + 6xy + 5y² ≥ λ(x² + y²)</div><label>Proposed constant λ<input id="bound" value="2" inputmode="decimal"></label><p class="field-note">We inspect an exact sum-of-squares certificate and an equality witness. Try λ=3 to see an invalid certificate.</p></div>
+<div class="form-footer"><span>Expressions are data. No generated code is executed.</span><button class="primary" id="run" type="submit">Check the statement <span>↗</span></button></div>
+</form>
+<div id="activity" role="status" aria-live="polite"></div>
+<section id="result" class="result" hidden aria-labelledby="result-heading"><div class="result-heading"><div><span class="eyebrow" id="evidence-type"></span><h2 id="result-heading"></h2></div><span id="status-pill" class="status-pill"></span></div><p id="explanation"></p><div id="result-detail"></div><div class="receipt-bar"><div><span class="eyebrow">REPLAYABLE RECEIPT</span><code id="receipt-id"></code></div><button type="button" id="replay">Replay the check</button><button type="button" id="download">Download JSON ↓</button></div><details><summary>Inspect the certificate and domain</summary><pre id="certificate"></pre></details><p class="scope" id="result-scope"></p></section>
+<div id="empty-state" class="empty-state"><span class="empty-mark">∴</span><h3>An answer should leave a trail.</h3><p>Run a check to see the result, its domain, and the evidence another person can inspect.</p><div><span>Exact arithmetic</span><span>Independent checker</span><span>Replayable receipt</span></div></div>
+</section>
+</main><footer><span>ProofDesk · Built from checked mathematical software</span><span>Supported identities only. Every result states its limits.</span></footer><script src="/app.js" defer></script></body></html>
