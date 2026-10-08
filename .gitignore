@@ -11,3 +11,4 @@ build/
 
 /media/page@*.webm
 /media/narration.wav
+/tests/interop/node_modules/

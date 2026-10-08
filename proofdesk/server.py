@@ -24,6 +24,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(raw)))
+        if status == 405:
+            self.send_header("Allow", "POST")
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Cache-Control", "no-store")
         self.send_header("Content-Security-Policy", "default-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'")
@@ -90,7 +92,7 @@ class Handler(BaseHTTPRequestHandler):
         if identity is None:
             return self.send(202, b"")
         if method == "initialize":
-            return answer({"protocolVersion":"2025-11-25","capabilities":{"tools":{"listChanged":False}},"serverInfo":{"name":"proofdesk","version":"0.1.0"},"instructions":"Return the tool's evidence type and domain with every mathematical answer. Never replace UNKNOWN with proof."})
+            return answer({"protocolVersion":"2025-11-25","capabilities":{"tools":{"listChanged":False}},"serverInfo":{"name":"proofdesk","version":"0.1.1"},"instructions":"Return the tool's evidence type and domain with every mathematical answer. Never replace UNKNOWN with proof."})
         if self.headers.get("MCP-Protocol-Version", "2025-11-25") != "2025-11-25":
             return self.send(400, {"error":"Unsupported MCP protocol version"})
         if method == "ping":
@@ -98,8 +100,10 @@ class Handler(BaseHTTPRequestHandler):
         if method == "tools/list":
             return answer({"tools":[{"name":name,"description":description,"inputSchema":SCHEMAS[name],"annotations":{"readOnlyHint":True,"destructiveHint":False,"openWorldHint":False}} for name,(description,_) in TOOLS.items()]})
         if method == "tools/call":
+            params = data.get("params", {})
+            if not isinstance(params, dict) or not isinstance(params.get("name"), str) or params.get("name") not in TOOLS:
+                return self.send(200, {"jsonrpc":"2.0","id":identity,"error":{"code":-32602,"message":"Unknown mathematical tool"}})
             try:
-                params = data.get("params", {})
                 result = dispatch(params["name"], params.get("arguments", {}))
                 receipt = create(params["name"], params.get("arguments", {}), result)
                 return answer({"content":[{"type":"text","text":json.dumps({"result":result,"receipt":receipt})}],"structuredContent":{"result":result,"receipt":receipt},"isError":False})

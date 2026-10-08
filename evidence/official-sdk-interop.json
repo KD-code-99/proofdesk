@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-08T14:33:05.190Z",
+  "sdk": "@modelcontextprotocol/client",
+  "version": "2.3.1",
+  "tests": [
+    {
+      "client_mode": "legacy",
+      "negotiated_era": "legacy",
+      "catalog_tools": 3,
+      "actual_tool_results": [
+        "REFUTED",
+        "CERTIFIED_RATIONAL_INVARIANT",
+        "EXACT_RECURRENCE_RESULT",
+        "CERTIFIED_SHARP_INEQUALITY"
+      ],
+      "unknown_tool_protocol_error": true
+    },
+    {
+      "client_mode": "auto",
+      "negotiated_era": "legacy",
+      "catalog_tools": 3,
+      "actual_tool_results": [
+        "REFUTED",
+        "CERTIFIED_RATIONAL_INVARIANT",
+        "EXACT_RECURRENCE_RESULT",
+        "CERTIFIED_SHARP_INEQUALITY"
+      ],
+      "unknown_tool_protocol_error": true
+    }
+  ],
+  "scope": "Executed official SDK default and automatic negotiation, catalog and mathematical tool calls against owned localhost. This is interoperability evidence, not official certification or live Alexa access."
+}

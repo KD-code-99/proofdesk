@@ -52,4 +52,6 @@ AI assistance: Codex helped implement, test and document this application. The m
 
 The [English narrated local demo](media/demo-narrated.mp4) is under three minutes. Playback timing is visibly adjusted from the retained [original recording](media/demo-local.webm); the narration identifies local/control execution and any live integration still pending. A GitHub-hosted file does not replace the required public YouTube/Vimeo submission URL.
 
-The complete Python source/test build is published through the repository release at `v0.1.0`. Extract it, open a terminal in the extracted folder, and follow the launch command above.
+The complete Python source/test build is published through the repository release at `v0.1.1`. Extract it, open a terminal in the extracted folder, and follow the launch command above.
+
+Official SDK interoperability: [evidence/official-sdk-interop.json](evidence/official-sdk-interop.json) records executed catalog/tool calls with `@modelcontextprotocol/client` 2.3.1 in default and automatic negotiation modes. The optional reproducible test lives in `tests/interop`; run `npm install` and `npm test` there, with Python 3.12+ available as `python` or set `PYTHON` to its executable. The app itself still has no Node dependency.

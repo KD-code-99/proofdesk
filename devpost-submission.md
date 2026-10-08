@@ -2,7 +2,7 @@
 
 Status: draft. Registration, rules attestation, public video upload and final Devpost submission remain external steps. The local build and test results do not imply any of those steps occurred.
 
-Primary track: Alexa+. Platform path: MCP server with a working simulated Alexa+ web interface. Public repository: https://github.com/KD-code-99/proofdesk (verify after publication). Video: media/demo-narrated.mp4; public YouTube/Vimeo upload pending.
+Primary track: Alexa+. Platform path: MCP server with a working simulated Alexa+ web interface. Public repository: https://github.com/KD-code-99/proofdesk. Video: media/demo-narrated.mp4; public YouTube/Vimeo upload pending.
 
 ## Inspiration
 
@@ -40,4 +40,6 @@ This is bounded mathematical software, not a general theorem prover. The web int
 
 ## Additional Open Source mini challenge contribution
 
-Separate project: https://github.com/KD-code-99/proofdesk-mcp-client (verify publication). GitHub username: KD-code-99. A dependency-free MCP client performs actual protocol initialization, catalog discovery and mathematical tool calls, preserving the structured certificate/counterexample and downloadable receipt. Its acceptance evidence covers an actual local server, a conserved quantity, a refuted guess and a `10^30`-step recurrence. It was created during the event as an additional licensed project alongside the main entry.
+Separate project: https://github.com/KD-code-99/proofdesk-mcp-client. GitHub username: KD-code-99. A dependency-free MCP client performs actual protocol initialization, catalog discovery and mathematical tool calls, preserving the structured certificate/counterexample and downloadable receipt. Its acceptance evidence covers an actual local server, a conserved quantity, a refuted guess and a `10^30`-step recurrence. It was created during the event as an additional licensed project alongside the main entry.
+
+Verified contribution commit: https://github.com/KD-code-99/proofdesk-mcp-client/commit/c7c750911d3f529e2d6272e442c716c19c43dc28
