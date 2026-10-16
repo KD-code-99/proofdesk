@@ -1,7 +1,8 @@
 "use strict";
-let mode = "invariant";
+let mode = "investigation";
 let lastReceipt = null;
 const $ = id => document.getElementById(id);
+$("mcp-endpoint").textContent = location.origin + "/mcp";
 const copy = {
   invariant: ["Find what stays constant.", "The Lyness map changes x and y. We can check whether a proposed quantity survives every step.", "Check the statement"],
   recurrence: ["Skip the waiting. Keep the exact answer.", "These recurrences have structure we can use. Compute a future state without simulating every intermediate step.", "Compute the future state"],
@@ -10,6 +11,11 @@ const copy = {
 document.querySelectorAll(".workflow").forEach(button => button.addEventListener("click", () => {
   mode = button.dataset.mode;
   document.querySelectorAll(".workflow").forEach(b => b.classList.toggle("active", b === button));
+  $("investigation-panel").hidden = mode !== "investigation";
+  $("question-card").hidden = mode === "investigation";
+  $("math-form").hidden = mode === "investigation";
+  $("result").hidden = true; $("activity").textContent = "";
+  if (mode === "investigation") { $("empty-state").hidden = true; if (currentCase?.latest) display({result:currentCase.latest.result,receipt:currentCase.latest}); return; }
   for (const name of Object.keys(copy)) $(name + "-fields").hidden = name !== mode;
   $("question-title").textContent = copy[mode][0];
   $("question-description").textContent = copy[mode][1];
@@ -28,6 +34,9 @@ let mcpSequence=0;
 const mcpReady=request('/mcp',{jsonrpc:'2.0',id:++mcpSequence,method:'initialize',params:{protocolVersion:'2025-11-25',capabilities:{},clientInfo:{name:'proofdesk-demo',version:'0.1.0'}}}).then(async response=>{
   if(response.error)throw Error(response.error.message);
   await fetch('/mcp',{method:'POST',headers:{'Content-Type':'application/json','MCP-Protocol-Version':'2025-11-25'},body:JSON.stringify({jsonrpc:'2.0',method:'notifications/initialized'})});
+  const catalog = await request('/mcp',{jsonrpc:'2.0',id:++mcpSequence,method:'tools/list'});
+  if(catalog.error) throw Error(catalog.error.message);
+  document.querySelector('.connection').textContent = `Local MCP · ${catalog.result.tools.length} tools`;
 });
 mcpReady.catch(()=>{});
 async function callTool(tool,args){
@@ -41,13 +50,17 @@ function display(data) {
   const r = data.result; lastReceipt = data.receipt;
   $("result").hidden = false; $("empty-state").hidden = true;
   $("evidence-type").textContent = r.evidence_type.replaceAll("_", " ").toUpperCase();
-  const titles = {CERTIFIED_RATIONAL_INVARIANT:"The quantity is conserved.", REFUTED:"This guess changes.", TRIVIAL_PARAMETER_FUNCTION:"Only the fixed parameter survives.", EXACT_RECURRENCE_RESULT:"The future state is ready.", CERTIFIED_SHARP_INEQUALITY:"The bound is proved and attained.", INVALID_CERTIFICATE:"This certificate does not prove the bound."};
+  const titles = {CERTIFIED_RATIONAL_INVARIANT:"The quantity is conserved.", REFUTED:"This guess changes.", TRIVIAL_PARAMETER_FUNCTION:"Only the fixed parameter survives.", EXACT_RECURRENCE_RESULT:"The future state is ready.", CERTIFIED_SHARP_INEQUALITY:"The bound is proved and attained.", INVALID_CERTIFICATE:"This certificate does not prove the bound.", EXACT_ORBIT:"The orbit, one exact step at a time.", ORBIT_STOPPED:"The orbit reached a computation boundary.", NO_RESULT_WITHIN_TEMPLATE:"No certified result within this search."};
   $("result-heading").textContent = titles[r.status] || "The checker returned a scoped result.";
   $("status-pill").textContent = r.status.startsWith("CERTIFIED") ? "✓ CHECKED" : r.status === "REFUTED" ? "× REFUTED" : r.status === "EXACT_RECURRENCE_RESULT" ? "✓ EXACT" : "REVIEW";
   $("status-pill").className = "status-pill" + (r.status === "REFUTED" ? " refuted" : r.status === "INVALID_CERTIFICATE" || r.status === "TRIVIAL_PARAMETER_FUNCTION" ? " unknown" : "");
   $("explanation").textContent = r.explanation;
   $("result-detail").textContent = r.counterexample ? "Counterexample: " + Object.entries(r.counterexample).map(([k,v]) => `${k} = ${v}`).join(", ") : r.value ? "Result = " + r.value : r.formula;
-  $("certificate").textContent = JSON.stringify({domain:r.domain, verification:r.verification, certificate:r.certificate}, null, 2);
+  if (r.witness) $("result-detail").textContent += ` · quantity ${r.witness.before} → ${r.witness.after}`;
+  if (r.search) $("result-detail").textContent = (r.formula || "No certified quantity within the declared template.") + `\n${r.search.checks_used} candidate checks · degree ≤ ${r.search.max_degree} · fixed denominator ${r.search.denominator}`;
+  document.querySelectorAll('.exploration-detail').forEach(e=>e.remove());
+  renderExploration(r);
+  $("certificate").textContent = JSON.stringify({domain:r.domain, verification:r.verification, certificate:r.certificate, search:r.search}, null, 2);
   $("receipt-id").textContent = lastReceipt.receipt_id;
   $("result-scope").textContent = r.scope;
 }
