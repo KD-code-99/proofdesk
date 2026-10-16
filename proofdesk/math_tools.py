@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / "vendor"))
 from noetherforge import algebra as A
 from noetherforge.rational import RationalGoal
 from noetherforge.proofcheck import verify
+from noetherforge import rational as R
 
 
 def canonical(value):
@@ -78,6 +79,10 @@ def check_invariant(arguments):
               "scope": "A supported rational identity. Historical novelty and arbitrary program correctness are not claimed."}
     if point:
         result["counterexample"] = point
+        state = tuple(Fraction(point[v]) for v in variables)
+        quantity = R.Rational.poly(A.parse(numerator, variables), len(variables)).div(R.Rational.poly(A.parse(denominator, variables), len(variables)))
+        image = tuple(m.at(state) for m in goal.maps)
+        result["witness"] = {"before": str(quantity.at(state)), "after": str(quantity.at(image)), "next_state": {v: str(q) for v, q in zip(variables, image)}}
     return result
 
 
@@ -132,10 +137,103 @@ def check_inequality(arguments):
             "scope": "This tool checks the displayed quadratic control, not arbitrary inequalities."}
 
 
+def discover_invariant(arguments):
+    """Counterexample-guided synthesis with deterministic, replayable budgets."""
+    # Use the checker entry point to validate names, syntax and parameter semantics.
+    setup = check_invariant({**arguments, "numerator": "1"})
+    goal = RationalGoal.from_dict(setup["certificate"]["goal"])
+    degree = integer(arguments.get("max_degree", 3), "max_degree", 3)
+    budget = integer(arguments.get("max_checks", 16), "max_checks", 32)
+    if degree < 1 or budget < 1:
+        raise ValueError("Choose degree 1–3 and a check budget of 1–32")
+    denominator = A.parse(bounded_expression(arguments.get("denominator", "x*y")), goal.variables)
+    if not denominator:
+        raise ValueError("The discovery denominator must be nonzero")
+    dim = len(goal.variables)
+    points, attempts = [], []
+    # Sampling proposes coefficients. Only the separate symbolic verifier certifies.
+    for j in range(dim):
+        for value in (1, -1, 2):
+            point = tuple(Fraction(value if i == j else 1) for i in range(dim))
+            try:
+                image = [m.at(point) for m in goal.maps]
+                if A.evaluate(denominator, point) and A.evaluate(denominator, image) and point not in points:
+                    points.append(point)
+            except ZeroDivisionError:
+                pass
+    visited = set()
+    accepted = None
+    for current_degree in range(1, degree + 1):
+        basis = R.all_monomials(dim, current_degree)
+        while len(attempts) < budget:
+            rows = []
+            for point in points:
+                image = [m.at(point) for m in goal.maps]
+                d0, d1 = A.evaluate(denominator, point), A.evaluate(denominator, image)
+                rows.append([A.evaluate({m: Fraction(1)}, image)*d0 - A.evaluate({m: Fraction(1)}, point)*d1 for m in basis])
+            learned = False
+            for vector in A.nullspace(rows, len(basis)):
+                numerator = R.primitive({m: c for m, c in zip(basis, vector) if c})
+                function = R.Rational.poly(numerator, dim).div(R.Rational.poly(denominator, dim))
+                key = canonical(A.terms(numerator))
+                if key in visited or not R.depends_on_state(function, goal.parameter_indices):
+                    continue
+                visited.add(key)
+                certificate = goal.certificate(numerator, denominator)
+                verdict = verify(certificate)
+                attempt = {"numerator": A.format_poly(numerator, goal.variables), "denominator": A.format_poly(denominator, goal.variables), "status": verdict["status"]}
+                attempts.append(attempt)
+                if verdict["status"] == "CERTIFIED_RATIONAL_INVARIANT":
+                    accepted = check_invariant({**arguments, "numerator": attempt["numerator"], "denominator": attempt["denominator"]})
+                    break
+                if verdict["status"] != "REFUTED":
+                    raise ValueError("Discovery stopped: the verifier did not return a usable counterexample")
+                attempt["counterexample"] = verdict["counterexample"]
+                point = tuple(Fraction(verdict["counterexample"][v]) for v in goal.variables)
+                if point in points:
+                    raise ValueError("Discovery stopped: repeated counterexample")
+                points.append(point)
+                learned = True
+                break
+            if accepted or not learned or len(attempts) >= budget:
+                break
+        if accepted or len(attempts) >= budget:
+            break
+    result = accepted or {"status": "NO_RESULT_WITHIN_TEMPLATE", "evidence_type": "bounded_search", "explanation": "No conserved quantity was certified within this numerator degree, fixed denominator and check budget.", "domain": setup["domain"], "scope": "A bounded search failure is inconclusive. It does not prove that no invariant exists."}
+    return {**result, "search": {"method": "Counterexample-guided exact linear algebra followed by independent symbolic verification", "max_degree": degree, "max_checks": budget, "denominator": arguments.get("denominator", "x*y"), "checks_used": len(attempts), "attempts": attempts}, "historical_novelty": "UNREVIEWED"}
+
+
+def trace_orbit(arguments):
+    checked = check_invariant(arguments)
+    goal = RationalGoal.from_dict(checked["certificate"]["goal"])
+    steps = integer(arguments.get("steps", 8), "steps", 24)
+    seed = arguments.get("seed", ["1"] * len(goal.variables))
+    if not isinstance(seed, list) or len(seed) != len(goal.variables) or any(not isinstance(v, str) or not re.fullmatch(r"-?\d{1,6}(/\d{1,6})?", v) for v in seed):
+        raise ValueError("Provide one small exact rational seed per variable")
+    point = tuple(Fraction(v) for v in seed)
+    quantity = R.parse(f"({bounded_expression(arguments.get('numerator', '(x+1)*(y+1)*(x+y+a)'))})/({bounded_expression(arguments.get('denominator', 'x*y'))})", goal.variables)
+    rows, stopped = [], None
+    for index in range(steps + 1):
+        if any(max(abs(v.numerator).bit_length(), v.denominator.bit_length()) > 512 for v in point):
+            stopped = "Exact orbit reached the 512-bit state limit"
+            break
+        try:
+            value = quantity.at(point)
+            rows.append({"step": index, "state": {v: str(q) for v, q in zip(goal.variables, point)}, "quantity": str(value)})
+            if index < steps:
+                point = tuple(m.at(point) for m in goal.maps)
+        except ZeroDivisionError:
+            stopped = f"Step {index} reaches a singularity outside the expression domain"
+            break
+    return {"status": "ORBIT_STOPPED" if stopped else "EXACT_ORBIT", "evidence_type": "exact_finite_trace", "explanation": stopped or "Each displayed step and quantity was computed with exact rational arithmetic.", "rows": rows, "variables": goal.variables, "formula": checked["formula"], "domain": checked["domain"], "scope": "A finite orbit illustrates behavior; constant samples alone are not a proof of invariance. Use the symbolic checker for a uniform identity."}
+
+
 TOOLS = {
     "check_invariant": ("Check a rational recurrence invariant using a separate exact arithmetic kernel.", check_invariant),
     "recurrence_jump": ("Compute a Fibonacci or affine recurrence after a large number of steps with exact modular arithmetic.", recurrence_jump),
     "check_inequality": ("Check the sharp-bound certificate for 5x²+6xy+5y² against x²+y².", check_inequality),
+    "discover_invariant": ("Synthesize a rational invariant from recurrence transitions, a fixed denominator and a bounded numerator template. Every accepted result is independently checked.", discover_invariant),
+    "trace_orbit": ("Compute a short exact rational orbit to inspect a counterexample or illustrate a checked invariant. Finite traces are not proofs.", trace_orbit),
 }
 
 
@@ -151,5 +249,6 @@ def dispatch(name, arguments):
 
 
 def engine_hashes():
-    paths = [Path(__file__), ROOT/"vendor/noetherforge/proofcheck.py", ROOT/"vendor/noetherforge/verifier.py", ROOT/"vendor/noetherforge/rational.py", ROOT/"vendor/noetherforge/algebra.py", ROOT/"examples/sharp-quadratic-certificate.json"]
-    return {str(p.relative_to(ROOT)).replace("\\", "/"): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
+    paths = [Path(__file__), ROOT/"vendor/noetherforge/proofcheck.py", ROOT/"vendor/noetherforge/verifier.py", ROOT/"vendor/noetherforge/rational.py", ROOT/"vendor/noetherforge/algebra.py", ROOT/"vendor/noetherforge/goals.py", ROOT/"examples/sharp-quadratic-certificate.json"]
+    # Python and JSON parse CRLF/LF identically. Keep receipts portable across Git checkouts.
+    return {str(p.relative_to(ROOT)).replace("\\", "/"): hashlib.sha256(p.read_bytes().replace(b"\r\n", b"\n")).hexdigest() for p in paths}

@@ -72,7 +72,7 @@ class TransportTests(unittest.TestCase):
         _,body=self.call('/mcp',{'jsonrpc':'2.0','id':1,'method':'initialize','params':{'protocolVersion':'2025-11-25','capabilities':{},'clientInfo':{'name':'test','version':'1'}}})
         self.assertEqual(json.loads(body)['result']['protocolVersion'],'2025-11-25')
         _,body=self.call('/mcp',{'jsonrpc':'2.0','id':2,'method':'tools/list'})
-        self.assertEqual(len(json.loads(body)['result']['tools']),3)
+        self.assertEqual(len(json.loads(body)['result']['tools']),10)
         _,body=self.call('/mcp',{'jsonrpc':'2.0','id':3,'method':'tools/call','params':{'name':'check_invariant','arguments':{'numerator':'x+y','denominator':'1'}}})
         self.assertEqual(json.loads(body)['result']['structuredContent']['result']['status'],'REFUTED')
     def test_notification_and_unknown_method(self):
