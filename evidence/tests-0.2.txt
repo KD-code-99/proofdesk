@@ -1,0 +1,34 @@
+test_counterexample_shows_before_and_after (test_investigations.ExplorationTests.test_counterexample_shows_before_and_after) ... ok
+test_engine_hashes_are_portable_across_checkout_line_endings (test_investigations.ExplorationTests.test_engine_hashes_are_portable_across_checkout_line_endings) ... ok
+test_exact_orbit_matches_independent_iteration (test_investigations.ExplorationTests.test_exact_orbit_matches_independent_iteration) ... ok
+test_invalid_budgets_and_seed_are_rejected (test_investigations.ExplorationTests.test_invalid_budgets_and_seed_are_rejected) ... ok
+test_search_limits_are_inconclusive (test_investigations.ExplorationTests.test_search_limits_are_inconclusive) ... ok
+test_singular_orbit_stops_without_fabricating_values (test_investigations.ExplorationTests.test_singular_orbit_stops_without_fabricating_values) ... ok
+test_synthesis_handles_a_different_map (test_investigations.ExplorationTests.test_synthesis_handles_a_different_map) ... ok
+test_synthesis_uses_counterexamples_then_certifies_and_replays (test_investigations.ExplorationTests.test_synthesis_uses_counterexamples_then_certifies_and_replays) ... ok
+test_bad_resource_returns_correlated_error (test_investigations.InvestigationProtocolTests.test_bad_resource_returns_correlated_error) ... ok
+test_stale_tool_write_is_an_actionable_tool_error (test_investigations.InvestigationProtocolTests.test_stale_tool_write_is_an_actionable_tool_error) ... ok
+test_stateful_catalog_resources_and_saved_mcp_receipts (test_investigations.InvestigationProtocolTests.test_stateful_catalog_resources_and_saved_mcp_receipts) ... ok
+test_bundle_rejects_forged_event_verdict (test_investigations.InvestigationTests.test_bundle_rejects_forged_event_verdict) ... ok
+test_complete_flow_survives_restart_and_exports_all_evidence (test_investigations.InvestigationTests.test_complete_flow_survives_restart_and_exports_all_evidence) ... ok
+test_concurrent_clients_cannot_overwrite_each_other (test_investigations.InvestigationTests.test_concurrent_clients_cannot_overwrite_each_other) ... ok
+test_invalid_ids_and_replay_before_check_are_rejected (test_investigations.InvestigationTests.test_invalid_ids_and_replay_before_check_are_rejected) ... ok
+test_modified_bundle_and_forged_result_are_rejected (test_investigations.InvestigationTests.test_modified_bundle_and_forged_result_are_rejected) ... ok
+test_stale_revision_does_not_append_event (test_investigations.InvestigationTests.test_stale_revision_does_not_append_event) ... ok
+test_affine_against_direct_iteration (test_math.MathematicsTests.test_affine_against_direct_iteration) ... ok
+test_conserved_rational_quantity (test_math.MathematicsTests.test_conserved_rational_quantity) ... ok
+test_counterexample_is_admissible_and_reproduces (test_math.MathematicsTests.test_counterexample_is_admissible_and_reproduces) ... ok
+test_fibonacci_against_independent_direct_iteration (test_math.MathematicsTests.test_fibonacci_against_independent_direct_iteration) ... ok
+test_parameter_only_is_not_discovery (test_math.MathematicsTests.test_parameter_only_is_not_discovery) ... ok
+test_receipt_detects_tampering_and_replays (test_math.MathematicsTests.test_receipt_detects_tampering_and_replays) ... ok
+test_rejects_code_floats_and_unbounded_integer_output (test_math.MathematicsTests.test_rejects_code_floats_and_unbounded_integer_output) ... ok
+test_sharp_bound_and_invalid_certificate (test_math.MathematicsTests.test_sharp_bound_and_invalid_certificate) ... ok
+test_browser_receipt_replay_and_origin_refusal (test_math.TransportTests.test_browser_receipt_replay_and_origin_refusal) ... ok
+test_initialize_list_and_real_tool_call (test_math.TransportTests.test_initialize_list_and_real_tool_call) ... ok
+test_notification_and_unknown_method (test_math.TransportTests.test_notification_and_unknown_method) ... ok
+test_unknown_tool_is_protocol_error_and_post_only_transport_advertises_allow (test_protocol.ProtocolConventionsTests.test_unknown_tool_is_protocol_error_and_post_only_transport_advertises_allow) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 18.722s
+
+OK

@@ -4,18 +4,35 @@
 <header><a class="wordmark" href="/" aria-label="ProofDesk home"><span class="mark">∴</span> proofdesk</a><span class="header-note">A mathematical workbench for your assistant</span><span class="connection"><i></i> Local engine</span></header>
 <main>
 <aside class="sidebar">
-<div class="eyebrow">YOUR WORKBENCH</div><h1>Ask a question.<br>Keep the evidence.</h1><p class="intro">Exact computations, checked identities, and counterexamples you can reproduce.</p>
+<h1>Ask a question.<br>Keep the evidence.</h1><p class="intro">Exact computations, checked identities, and counterexamples you can reproduce.</p>
 <nav aria-label="Mathematical workflows">
-<button class="workflow active" data-mode="invariant"><span>01</span><strong>Conservation laws</strong><small>Does a quantity stay constant?</small></button>
+<button class="workflow active" data-mode="investigation"><strong>Investigations</strong><small>From a wrong guess to evidence</small></button>
+<button class="workflow" data-mode="invariant"><span>01</span><strong>Conservation laws</strong><small>Does a quantity stay constant?</small></button>
 <button class="workflow" data-mode="recurrence"><span>02</span><strong>Long recurrences</strong><small>Jump directly to a future state</small></button>
 <button class="workflow" data-mode="inequality"><span>03</span><strong>Sharp inequalities</strong><small>Inspect a bound and its witness</small></button>
 </nav>
-<div class="integration"><div class="eyebrow">ASSISTANT CONNECTION</div><code>http://127.0.0.1:4186/mcp</code><p>Connect an MCP client, or try the simulated Alexa+ experience here. This local interface uses explicit tool routing.</p><a href="https://amazonappdev2026.devpost.com/" target="_blank" rel="noreferrer">Built for Amazon’s Alexa+ track ↗</a></div>
+<div class="integration"><div class="eyebrow">ASSISTANT CONNECTION</div><code id="mcp-endpoint">/mcp</code><p>Connect an MCP client, or try the simulated Alexa+ experience here. This local interface uses explicit tool routing.</p><a href="https://amazonappdev2026.devpost.com/" target="_blank" rel="noreferrer">Built for Amazon’s Alexa+ track ↗</a></div>
 </aside>
 <section class="workspace" aria-label="Question and mathematical result">
 <div class="workspace-top"><span class="eyebrow">SIMULATED ALEXA+ EXPERIENCE</span><span class="scope-tag">Evidence before confidence</span></div>
-<div class="question-card"><div class="avatar">∴</div><div><h2 id="question-title">Find what stays constant.</h2><p id="question-description">The Lyness map changes x and y. We can check whether a proposed quantity survives every step.</p></div></div>
-<form id="math-form">
+<section id="investigation-panel" aria-labelledby="investigation-heading">
+<h2 id="investigation-heading">Let a wrong answer lead somewhere.</h2>
+<p class="investigation-intro">Challenge a conjecture. Let exact counterexamples guide a search for something that survives. Keep the whole investigation.</p>
+<div class="case-toolbar"><label>Start with a recurrence<select id="case-preset"><option value="lyness">Lyness map · a rational conservation law</option><option value="rotation">Quarter-turn · a polynomial conservation law</option><option value="custom">Use the conservation-law fields</option></select></label><button type="button" class="primary" id="new-case">Begin investigation</button></div>
+<div class="resume-row"><label>Resume saved work<select id="saved-cases"><option value="">Choose an investigation</option></select></label><button type="button" id="refresh-cases">Refresh</button></div>
+<div id="case-work" hidden>
+<div class="case-heading"><h3 id="case-title"></h3><span id="case-revision"></span></div>
+<p id="case-problem" class="math-line"></p>
+<ol id="case-timeline" aria-label="Investigation evidence history"></ol>
+<div class="case-actions"><button type="button" data-action="check">Challenge the guess</button><button type="button" data-action="discover">Find a conserved quantity</button><button type="button" data-action="trace">Explore the orbit</button><button type="button" data-action="replay">Replay saved evidence</button></div>
+<form id="assistant-form"><label for="assistant-input">Continue the investigation</label><div class="assistant-entry"><input id="assistant-input" placeholder="Try: find a conserved quantity" autocomplete="off" maxlength="200"><button type="submit" class="primary">Ask</button></div><p>Guided simulation with local intent routing: check, discover, show orbit, or replay. Exact tools produce every mathematical answer.</p></form>
+<details class="search-options"><summary>Search bounds and orbit seed</summary><div class="field-pair"><label>Discovery denominator<input id="search-denominator" value="x*y" spellcheck="false"></label><label>Maximum numerator degree<select id="search-degree"><option>1</option><option>2</option><option selected>3</option></select></label><label>Exact seed, comma separated<input id="orbit-seed" value="1, 1, 1"></label><label>Orbit steps<input id="orbit-steps" value="8" type="number" min="0" max="24"></label></div></details>
+<div class="case-export"><button type="button" id="export-case">Export investigation</button><label class="file-control">Audit an exported bundle<input type="file" id="audit-bundle" accept=".json,application/json"></label></div>
+</div>
+<p class="local-note">Saved on this computer. Any MCP client connected to this server can resume the same work. The simulation uses no production Alexa connection.</p>
+</section>
+<div class="question-card" id="question-card" hidden><div class="avatar">∴</div><div><h2 id="question-title">Find what stays constant.</h2><p id="question-description">The Lyness map changes x and y. We can check whether a proposed quantity survives every step.</p></div></div>
+<form id="math-form" hidden>
 <div id="invariant-fields" class="fields"><div class="field-pair"><label>Variables<input id="variables" value="x, y, a" autocomplete="off"></label><label>Fixed parameters<input id="parameters" value="a" autocomplete="off"></label></div><label>Next state, one expression per line<textarea id="transitions" rows="3" spellcheck="false">y
 (a+y)/x
 a</textarea></label><div class="field-pair"><label>Numerator<input id="numerator" value="(x+1)*(y+1)*(x+y+a)" spellcheck="false"></label><label>Denominator<input id="denominator" value="x*y" spellcheck="false"></label></div><div class="presets"><span>Try a hypothesis</span><button type="button" id="valid-preset">A conserved quantity</button><button type="button" id="invalid-preset">An incorrect guess: x+y</button></div></div>
@@ -25,6 +42,6 @@ a</textarea></label><div class="field-pair"><label>Numerator<input id="numerator
 </form>
 <div id="activity" role="status" aria-live="polite"></div>
 <section id="result" class="result" hidden aria-labelledby="result-heading"><div class="result-heading"><div><span class="eyebrow" id="evidence-type"></span><h2 id="result-heading"></h2></div><span id="status-pill" class="status-pill"></span></div><p id="explanation"></p><div id="result-detail"></div><div class="receipt-bar"><div><span class="eyebrow">REPLAYABLE RECEIPT</span><code id="receipt-id"></code></div><button type="button" id="replay">Replay the check</button><button type="button" id="download">Download JSON ↓</button></div><details><summary>Inspect the certificate and domain</summary><pre id="certificate"></pre></details><p class="scope" id="result-scope"></p></section>
-<div id="empty-state" class="empty-state"><span class="empty-mark">∴</span><h3>An answer should leave a trail.</h3><p>Run a check to see the result, its domain, and the evidence another person can inspect.</p><div><span>Exact arithmetic</span><span>Independent checker</span><span>Replayable receipt</span></div></div>
+<div id="empty-state" class="empty-state" hidden><span class="empty-mark">∴</span><h3>An answer should leave a trail.</h3><p>Run a check to see the result, its domain, and the evidence another person can inspect.</p><div><span>Exact arithmetic</span><span>Independent checker</span><span>Replayable receipt</span></div></div>
 </section>
-</main><footer><span>ProofDesk · Built from checked mathematical software</span><span>Supported identities only. Every result states its limits.</span></footer><script src="/app.js" defer></script></body></html>
+</main><footer><span>ProofDesk · Built from checked mathematical software</span><span>Supported identities only. Every result states its limits.</span></footer><script src="/app.js" defer></script><script src="/investigations.js" defer></script></body></html>

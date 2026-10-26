@@ -1,0 +1,614 @@
+{
+  "schema_version": 1,
+  "investigation": {
+    "schema_version": 1,
+    "id": "8be952a2620344fab7b85cb09d292721",
+    "title": "What survives the Lyness map?",
+    "revision": 4,
+    "created_at": "2026-10-16T17:40:20.936811+00:00",
+    "updated_at": "2026-10-16T17:40:25.525129+00:00",
+    "problem": {
+      "variables": [
+        "x",
+        "y",
+        "a"
+      ],
+      "parameters": [
+        "a"
+      ],
+      "transitions": [
+        "y",
+        "(a+y)/x",
+        "a"
+      ],
+      "numerator": "x+y",
+      "denominator": "1"
+    },
+    "active_quantity": {
+      "numerator": "1 * a + 1 * y + 1 * x + 1 * y * a + 1 * y**2 + 1 * x * a + 1 * x**2 + 1 * x * y**2 + 1 * x**2 * y",
+      "denominator": "1 * x * y"
+    },
+    "events": [
+      {
+        "revision": 1,
+        "action": "check",
+        "status": "REFUTED",
+        "summary": "This proposed invariant changes. The checker found an exact admissible counterexample.",
+        "receipt_id": "29b52dc40d7e7770c4a42f6cde6b9e90f96a2022be8e8a1e73dfcbc4baaf303b"
+      },
+      {
+        "revision": 2,
+        "action": "discover",
+        "status": "CERTIFIED_RATIONAL_INVARIANT",
+        "summary": "The identity holds for every rational state satisfying the certificate's nonzero domain guards.",
+        "receipt_id": "1e931b069ac8b49e591873deba80aa2e2cac72dcfb8afe2bdbd22d5809d6e9b6"
+      },
+      {
+        "revision": 3,
+        "action": "trace",
+        "status": "EXACT_ORBIT",
+        "summary": "Each displayed step and quantity was computed with exact rational arithmetic.",
+        "receipt_id": "f70307e739d35625ee91ad8f10f98e46e49e7110206cba40856ec6fbb1a21422"
+      },
+      {
+        "revision": 4,
+        "action": "replay",
+        "status": "REPLAY_PASSED",
+        "summary": "Recomputed the saved evidence with matching engine hashes.",
+        "receipt_id": "f70307e739d35625ee91ad8f10f98e46e49e7110206cba40856ec6fbb1a21422"
+      }
+    ]
+  },
+  "receipts": {
+    "29b52dc40d7e7770c4a42f6cde6b9e90f96a2022be8e8a1e73dfcbc4baaf303b": {
+      "schema_version": 1,
+      "tool": "check_invariant",
+      "arguments": {
+        "variables": [
+          "x",
+          "y",
+          "a"
+        ],
+        "parameters": [
+          "a"
+        ],
+        "transitions": [
+          "y",
+          "(a+y)/x",
+          "a"
+        ],
+        "numerator": "x+y",
+        "denominator": "1"
+      },
+      "result": {
+        "status": "REFUTED",
+        "evidence_type": "exact_checker_verdict",
+        "explanation": "This proposed invariant changes. The checker found an exact admissible counterexample.",
+        "verification": {
+          "status": "REFUTED",
+          "counterexample": {
+            "x": "1",
+            "y": "0",
+            "a": "0"
+          },
+          "before": "1",
+          "after": "0",
+          "domain_nonzero_guard_count": 1
+        },
+        "certificate": {
+          "schema_version": 2,
+          "kind": "rational_invariant",
+          "domain": "QQ",
+          "goal": {
+            "id": "proofdesk-user-program",
+            "kind": "rational_recurrence",
+            "variables": [
+              "x",
+              "y",
+              "a"
+            ],
+            "transitions": [
+              "y",
+              "(a+y)/x",
+              "a"
+            ],
+            "max_degree": 6,
+            "max_denominator_degree": 3,
+            "parameters": [
+              "a"
+            ],
+            "guards": [],
+            "sources": []
+          },
+          "map_hash": "72143ead46bf0237a4c8fa38829f451dabc0de18d04c4dcefe5e7f89db2baf7c",
+          "numerator": [
+            {
+              "powers": [
+                0,
+                1,
+                0
+              ],
+              "coefficient": "1"
+            },
+            {
+              "powers": [
+                1,
+                0,
+                0
+              ],
+              "coefficient": "1"
+            }
+          ],
+          "denominator": [
+            {
+              "powers": [
+                0,
+                0,
+                0
+              ],
+              "coefficient": "1"
+            }
+          ],
+          "required_nonzero_guards": [
+            [
+              {
+                "powers": [
+                  1,
+                  0,
+                  0
+                ],
+                "coefficient": "1"
+              }
+            ]
+          ],
+          "historical_novelty": "UNREVIEWED"
+        },
+        "formula": "(x+y) / (1)",
+        "domain": "Rational arithmetic; original-expression nonzero guards are retained.",
+        "scope": "A supported rational identity. Historical novelty and arbitrary program correctness are not claimed.",
+        "counterexample": {
+          "x": "1",
+          "y": "0",
+          "a": "0"
+        },
+        "witness": {
+          "before": "1",
+          "after": "0",
+          "next_state": {
+            "x": "0",
+            "y": "0",
+            "a": "0"
+          }
+        }
+      },
+      "engine_sha256": {
+        "proofdesk/math_tools.py": "50d18f10af6700094bee6433ef2989084e3d2bf8bb5a7b24489cb17191465ca4",
+        "vendor/noetherforge/proofcheck.py": "70ad1879594771576764e31729eb003e78873310dddf6792c1ffefae641478b7",
+        "vendor/noetherforge/verifier.py": "631e084f8c43fe43a8c7158af3b939f797809d92d3e25b07f4580b12f9a683dc",
+        "vendor/noetherforge/rational.py": "503061e74519069d76d70ace0fc3ba0f8675f12e3349e487f3d92eb4f355760b",
+        "vendor/noetherforge/algebra.py": "859619f39ad542608d3d630279ce79c47ae88bd5296814ea0a999334c9f3d2a8",
+        "vendor/noetherforge/goals.py": "b2ec1d9cc3538b4e94d1df156e909077fc3563996d27760bf8eca6a90fa7622d",
+        "examples/sharp-quadratic-certificate.json": "dda5f1993757d2fc01776111d6b871c8aa5e485436ef6bc71b0f10993b8499d2"
+      },
+      "receipt_id": "29b52dc40d7e7770c4a42f6cde6b9e90f96a2022be8e8a1e73dfcbc4baaf303b"
+    },
+    "1e931b069ac8b49e591873deba80aa2e2cac72dcfb8afe2bdbd22d5809d6e9b6": {
+      "schema_version": 1,
+      "tool": "discover_invariant",
+      "arguments": {
+        "variables": [
+          "x",
+          "y",
+          "a"
+        ],
+        "parameters": [
+          "a"
+        ],
+        "transitions": [
+          "y",
+          "(a+y)/x",
+          "a"
+        ],
+        "numerator": "x+y",
+        "denominator": "x*y",
+        "max_degree": 3,
+        "max_checks": 16
+      },
+      "result": {
+        "status": "CERTIFIED_RATIONAL_INVARIANT",
+        "evidence_type": "exact_symbolic_identity",
+        "explanation": "The identity holds for every rational state satisfying the certificate's nonzero domain guards.",
+        "verification": {
+          "status": "CERTIFIED_RATIONAL_INVARIANT",
+          "arithmetic": "exact_rational",
+          "domain_nonzero_guard_count": 3,
+          "historical_novelty": "UNREVIEWED"
+        },
+        "certificate": {
+          "schema_version": 2,
+          "kind": "rational_invariant",
+          "domain": "QQ",
+          "goal": {
+            "id": "proofdesk-user-program",
+            "kind": "rational_recurrence",
+            "variables": [
+              "x",
+              "y",
+              "a"
+            ],
+            "transitions": [
+              "y",
+              "(a+y)/x",
+              "a"
+            ],
+            "max_degree": 6,
+            "max_denominator_degree": 3,
+            "parameters": [
+              "a"
+            ],
+            "guards": [],
+            "sources": []
+          },
+          "map_hash": "72143ead46bf0237a4c8fa38829f451dabc0de18d04c4dcefe5e7f89db2baf7c",
+          "numerator": [
+            {
+              "powers": [
+                0,
+                0,
+                1
+              ],
+              "coefficient": "1"
+            },
+            {
+              "powers": [
+                0,
+                1,
+                0
+              ],
+              "coefficient": "1"
+            },
+            {
+              "powers": [
+                1,
+                0,
+                0
+              ],
+              "coefficient": "1"
+            },
+            {
+              "powers": [
+                0,
+                1,
+                1
+              ],
+              "coefficient": "1"
+            },
+            {
+              "powers": [
+                0,
+                2,
+                0
+              ],
+              "coefficient": "1"
+            },
+            {
+              "powers": [
+                1,
+                0,
+                1
+              ],
+              "coefficient": "1"
+            },
+            {
+              "powers": [
+                2,
+                0,
+                0
+              ],
+              "coefficient": "1"
+            },
+            {
+              "powers": [
+                1,
+                2,
+                0
+              ],
+              "coefficient": "1"
+            },
+            {
+              "powers": [
+                2,
+                1,
+                0
+              ],
+              "coefficient": "1"
+            }
+          ],
+          "denominator": [
+            {
+              "powers": [
+                1,
+                1,
+                0
+              ],
+              "coefficient": "1"
+            }
+          ],
+          "required_nonzero_guards": [
+            [
+              {
+                "powers": [
+                  0,
+                  1,
+                  1
+                ],
+                "coefficient": "1"
+              },
+              {
+                "powers": [
+                  0,
+                  2,
+                  0
+                ],
+                "coefficient": "1"
+              }
+            ],
+            [
+              {
+                "powers": [
+                  1,
+                  0,
+                  0
+                ],
+                "coefficient": "1"
+              }
+            ],
+            [
+              {
+                "powers": [
+                  1,
+                  1,
+                  0
+                ],
+                "coefficient": "1"
+              }
+            ]
+          ],
+          "historical_novelty": "UNREVIEWED"
+        },
+        "formula": "(1 * a + 1 * y + 1 * x + 1 * y * a + 1 * y**2 + 1 * x * a + 1 * x**2 + 1 * x * y**2 + 1 * x**2 * y) / (1 * x * y)",
+        "domain": "Rational arithmetic; original-expression nonzero guards are retained.",
+        "scope": "A supported rational identity. Historical novelty and arbitrary program correctness are not claimed.",
+        "search": {
+          "method": "Counterexample-guided exact linear algebra followed by independent symbolic verification",
+          "max_degree": 3,
+          "max_checks": 16,
+          "denominator": "x*y",
+          "checks_used": 8,
+          "attempts": [
+            {
+              "numerator": "1 + -1 * a + -1 * x + 1 * x * a",
+              "denominator": "1 * x * y",
+              "status": "REFUTED",
+              "counterexample": {
+                "x": "1",
+                "y": "2",
+                "a": "0"
+              }
+            },
+            {
+              "numerator": "2 + 1 * a + -2 * y + -2 * x + 1 * y**2 + 1 * x**2",
+              "denominator": "1 * x * y",
+              "status": "REFUTED",
+              "counterexample": {
+                "x": "1",
+                "y": "3",
+                "a": "0"
+              }
+            },
+            {
+              "numerator": "6 + -3 * a + -4 * y + -6 * x + 2 * y * a + 1 * y**2 + 4 * x * a + 1 * x**2",
+              "denominator": "1 * x * y",
+              "status": "REFUTED",
+              "counterexample": {
+                "x": "1",
+                "y": "2",
+                "a": "2"
+              }
+            },
+            {
+              "numerator": "6 + -1 * a + -4 * y + -10 * x + -2 * a**2 + 2 * y * a + 1 * y**2 + 8 * x * a + 1 * x**2",
+              "denominator": "1 * x * y",
+              "status": "REFUTED",
+              "counterexample": {
+                "x": "1",
+                "y": "1",
+                "a": "3"
+              }
+            },
+            {
+              "numerator": "6 + 2 * a + -4 * y + -5 * x + 2 * y**2 + 1 * x**3",
+              "denominator": "1 * x * y",
+              "status": "REFUTED",
+              "counterexample": {
+                "x": "1",
+                "y": "3",
+                "a": "1"
+              }
+            },
+            {
+              "numerator": "1 * a + 1 * x + 1 * y**2 + 1 * x**2 * y",
+              "denominator": "1 * x * y",
+              "status": "REFUTED",
+              "counterexample": {
+                "x": "2",
+                "y": "3",
+                "a": "0"
+              }
+            },
+            {
+              "numerator": "6 + -8 * y + -11 * x + -8 * y**2 + -12 * x * a + -6 * x**2 + 4 * x**2 * a + -12 * x**2 * y + 3 * x**3",
+              "denominator": "1 * x * y",
+              "status": "REFUTED",
+              "counterexample": {
+                "x": "1",
+                "y": "4",
+                "a": "0"
+              }
+            },
+            {
+              "numerator": "1 * a + 1 * y + 1 * x + 1 * y * a + 1 * y**2 + 1 * x * a + 1 * x**2 + 1 * x * y**2 + 1 * x**2 * y",
+              "denominator": "1 * x * y",
+              "status": "CERTIFIED_RATIONAL_INVARIANT"
+            }
+          ]
+        },
+        "historical_novelty": "UNREVIEWED"
+      },
+      "engine_sha256": {
+        "proofdesk/math_tools.py": "50d18f10af6700094bee6433ef2989084e3d2bf8bb5a7b24489cb17191465ca4",
+        "vendor/noetherforge/proofcheck.py": "70ad1879594771576764e31729eb003e78873310dddf6792c1ffefae641478b7",
+        "vendor/noetherforge/verifier.py": "631e084f8c43fe43a8c7158af3b939f797809d92d3e25b07f4580b12f9a683dc",
+        "vendor/noetherforge/rational.py": "503061e74519069d76d70ace0fc3ba0f8675f12e3349e487f3d92eb4f355760b",
+        "vendor/noetherforge/algebra.py": "859619f39ad542608d3d630279ce79c47ae88bd5296814ea0a999334c9f3d2a8",
+        "vendor/noetherforge/goals.py": "b2ec1d9cc3538b4e94d1df156e909077fc3563996d27760bf8eca6a90fa7622d",
+        "examples/sharp-quadratic-certificate.json": "dda5f1993757d2fc01776111d6b871c8aa5e485436ef6bc71b0f10993b8499d2"
+      },
+      "receipt_id": "1e931b069ac8b49e591873deba80aa2e2cac72dcfb8afe2bdbd22d5809d6e9b6"
+    },
+    "f70307e739d35625ee91ad8f10f98e46e49e7110206cba40856ec6fbb1a21422": {
+      "schema_version": 1,
+      "tool": "trace_orbit",
+      "arguments": {
+        "variables": [
+          "x",
+          "y",
+          "a"
+        ],
+        "parameters": [
+          "a"
+        ],
+        "transitions": [
+          "y",
+          "(a+y)/x",
+          "a"
+        ],
+        "numerator": "1 * a + 1 * y + 1 * x + 1 * y * a + 1 * y**2 + 1 * x * a + 1 * x**2 + 1 * x * y**2 + 1 * x**2 * y",
+        "denominator": "1 * x * y",
+        "seed": [
+          "1",
+          "1",
+          "1"
+        ],
+        "steps": 8
+      },
+      "result": {
+        "status": "EXACT_ORBIT",
+        "evidence_type": "exact_finite_trace",
+        "explanation": "Each displayed step and quantity was computed with exact rational arithmetic.",
+        "rows": [
+          {
+            "step": 0,
+            "state": {
+              "x": "1",
+              "y": "1",
+              "a": "1"
+            },
+            "quantity": "9"
+          },
+          {
+            "step": 1,
+            "state": {
+              "x": "1",
+              "y": "2",
+              "a": "1"
+            },
+            "quantity": "9"
+          },
+          {
+            "step": 2,
+            "state": {
+              "x": "2",
+              "y": "3",
+              "a": "1"
+            },
+            "quantity": "9"
+          },
+          {
+            "step": 3,
+            "state": {
+              "x": "3",
+              "y": "2",
+              "a": "1"
+            },
+            "quantity": "9"
+          },
+          {
+            "step": 4,
+            "state": {
+              "x": "2",
+              "y": "1",
+              "a": "1"
+            },
+            "quantity": "9"
+          },
+          {
+            "step": 5,
+            "state": {
+              "x": "1",
+              "y": "1",
+              "a": "1"
+            },
+            "quantity": "9"
+          },
+          {
+            "step": 6,
+            "state": {
+              "x": "1",
+              "y": "2",
+              "a": "1"
+            },
+            "quantity": "9"
+          },
+          {
+            "step": 7,
+            "state": {
+              "x": "2",
+              "y": "3",
+              "a": "1"
+            },
+            "quantity": "9"
+          },
+          {
+            "step": 8,
+            "state": {
+              "x": "3",
+              "y": "2",
+              "a": "1"
+            },
+            "quantity": "9"
+          }
+        ],
+        "variables": [
+          "x",
+          "y",
+          "a"
+        ],
+        "formula": "(1 * a + 1 * y + 1 * x + 1 * y * a + 1 * y**2 + 1 * x * a + 1 * x**2 + 1 * x * y**2 + 1 * x**2 * y) / (1 * x * y)",
+        "domain": "Rational arithmetic; original-expression nonzero guards are retained.",
+        "scope": "A finite orbit illustrates behavior; constant samples alone are not a proof of invariance. Use the symbolic checker for a uniform identity."
+      },
+      "engine_sha256": {
+        "proofdesk/math_tools.py": "50d18f10af6700094bee6433ef2989084e3d2bf8bb5a7b24489cb17191465ca4",
+        "vendor/noetherforge/proofcheck.py": "70ad1879594771576764e31729eb003e78873310dddf6792c1ffefae641478b7",
+        "vendor/noetherforge/verifier.py": "631e084f8c43fe43a8c7158af3b939f797809d92d3e25b07f4580b12f9a683dc",
+        "vendor/noetherforge/rational.py": "503061e74519069d76d70ace0fc3ba0f8675f12e3349e487f3d92eb4f355760b",
+        "vendor/noetherforge/algebra.py": "859619f39ad542608d3d630279ce79c47ae88bd5296814ea0a999334c9f3d2a8",
+        "vendor/noetherforge/goals.py": "b2ec1d9cc3538b4e94d1df156e909077fc3563996d27760bf8eca6a90fa7622d",
+        "examples/sharp-quadratic-certificate.json": "dda5f1993757d2fc01776111d6b871c8aa5e485436ef6bc71b0f10993b8499d2"
+      },
+      "receipt_id": "f70307e739d35625ee91ad8f10f98e46e49e7110206cba40856ec6fbb1a21422"
+    }
+  },
+  "bundle_sha256": "da53677bad33cda0904f154b20eaf1ecef8d600b8dfb5c5887d591f60ea90c4b"
+}

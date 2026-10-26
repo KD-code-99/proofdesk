@@ -1,0 +1,6 @@
+{
+  "status": "BUNDLE_REPLAY_PASSED",
+  "receipts_replayed": 3,
+  "events": 4,
+  "scope": "Content integrity and mathematical replay; this is not an authorship signature or historical provenance proof."
+}

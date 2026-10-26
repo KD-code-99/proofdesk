@@ -1,31 +1,47 @@
 {
   "status": "PASS",
-  "checked_at": "2026-10-08T14:33:05.190Z",
+  "checked_at": "2026-10-16T17:37:58.290Z",
   "sdk": "@modelcontextprotocol/client",
   "version": "2.3.1",
   "tests": [
     {
       "client_mode": "legacy",
       "negotiated_era": "legacy",
-      "catalog_tools": 3,
+      "catalog_tools": 10,
       "actual_tool_results": [
         "REFUTED",
         "CERTIFIED_RATIONAL_INVARIANT",
         "EXACT_RECURRENCE_RESULT",
         "CERTIFIED_SHARP_INEQUALITY"
       ],
+      "persistent_investigation_actions": [
+        "check",
+        "discover",
+        "trace",
+        "replay"
+      ],
+      "resource_resume_revision": 4,
+      "exported_events": 4,
       "unknown_tool_protocol_error": true
     },
     {
       "client_mode": "auto",
       "negotiated_era": "legacy",
-      "catalog_tools": 3,
+      "catalog_tools": 10,
       "actual_tool_results": [
         "REFUTED",
         "CERTIFIED_RATIONAL_INVARIANT",
         "EXACT_RECURRENCE_RESULT",
         "CERTIFIED_SHARP_INEQUALITY"
       ],
+      "persistent_investigation_actions": [
+        "check",
+        "discover",
+        "trace",
+        "replay"
+      ],
+      "resource_resume_revision": 4,
+      "exported_events": 4,
       "unknown_tool_protocol_error": true
     }
   ],

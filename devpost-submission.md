@@ -4,25 +4,27 @@ Submission text draft. The public video URL is supplied separately; this documen
 
 Primary track: Alexa+. Platform path: MCP server with a working simulated Alexa+ web interface. Public repository: https://github.com/KD-code-99/proofdesk. Video: media/demo-narrated.mp4; public YouTube/Vimeo upload pending.
 
+**0.2 update, 16 October:** the linked existing MP4 shows the earlier build. Record and upload the new investigation flow using [the submission script](docs/submission-readiness.md) before entering. This file is updated project copy, not a submitted entry.
+
 ## Inspiration
 
 An assistant can describe a formula convincingly even when the formula is wrong. ProofDesk turns a mathematical guess into a checkable result: an exact counterexample when the guess fails, or a supported certificate with explicit domain guards when it succeeds. I built it for people studying small dynamical systems who need to inspect the evidence behind an assistant's answer. My existing exact mathematical kernel made that distinction a practical product feature.
 
 ## What it does
 
-ProofDesk checks a proposed conservation law and produces either a certificate with its domain or a concrete counterexample. It also jumps to far-future states of supported recurrences using exact modular arithmetic and explains a supported sharp inequality using a sum-of-squares certificate and equality witness. Every result can be downloaded and recomputed.
+ProofDesk turns a wrong mathematical guess into a persistent investigation. It checks the guess, shows exact before/after values at a counterexample, searches a declared coefficient template for a replacement conservation law, and independently checks every proposed repair. An interactive orbit view lets a person inspect exact recurrence states. Saved history can be resumed by another MCP client, and a portable investigation bundle contains every receipt for offline replay. The original recurrence-jump and sharp-inequality workflows remain available.
 
 ## How we built it
 
-I wrapped the existing Apache-2.0 NOETHER-FORGE kernel in new, bounded MCP tools. The new server implements protocol 2025-11-25 using Streamable HTTP and JSON responses. The interface demonstrates the Alexa+ use case locally, and the Agent Skill explains how an assistant should invoke the tools and report their limited verdicts. Receipt replay recomputes the mathematical check with pinned engine hashes. The Python application has no third-party runtime dependencies.
+I wrapped the existing Apache-2.0 NOETHER-FORGE kernel in bounded MCP tools. The server implements protocol 2025-11-25 over Streamable HTTP with JSON responses, ten tools, output schemas and evidence resources. A deterministic counterexample-guided search uses exact linear algebra to propose coefficients; a separate symbolic verifier certifies candidates. Persistent investigations use revision checks and atomic record replacement. The interface is a clearly labeled local Alexa+ simulation with four routed text intents, not a general language model or production Alexa connection. The Agent Skill explains how an assistant can use the same stateful tools. Receipt replay reconstructs the mathematical result with engine hashes. The Python app has no third-party runtime dependencies.
 
 ## Demonstration
 
-Start with the Lyness map `(x,y,a) → (y,(a+y)/x,a)` and ask whether `x+y` is conserved. The checker finds an exact admissible state where it changes. Replace it with `(x+1)*(y+1)*(x+y+a)/(x*y)` and check the uniform rational identity and its guards. Replay that result. Then compute Fibonacci modulo `1000000007` at `10^30` steps and inspect the supported sharp bound with constant 2.
+Start with the Lyness map `(x,y,a) → (y,(a+y)/x,a)` and ask whether `x+y` is conserved. The checker finds an exact admissible state where it changes. Ask the search to find a conserved quantity with denominator `x*y` and numerator degree at most 3. Inspect the rejected candidates and their counterexamples, then the certified result and domain. Explore its orbit, reload and resume, and export/replay the full investigation. Show the quarter-turn recurrence to demonstrate another computed result. The known conservation laws are controls, not claims of new mathematics.
 
 ## What changed during the hackathon
 
-The kernel existed before this event. The MCP server, tool schemas, receipts, replay API, assistant interface, skill, tests and demo were built during the event window. The known formulas are demonstration controls, not claims of newly discovered mathematics.
+The kernel existed before this event. The initial MCP server, tool schemas, receipts, replay API, assistant interface, skill, tests and demo were built during the event window. On 16 October I added coefficient synthesis, exact orbits, persistent cross-session investigations, evidence resources, bundle audit and a connected interface. `NEW_WORK.md` names the starting revision and distinguishes new adapters from pre-existing mathematical algorithms.
 
 ## Product feedback
 
@@ -32,7 +34,7 @@ I would build further mathematical assistant integrations with this interface. D
 
 ## Testing and AI usage
 
-Twelve acceptance tests pass. They compare shortcuts with direct recurrence computation, check exact counterexamples, reject altered receipts and exercise the MCP transport. The official MCP client 2.3.1 initializes the server, discovers all three tools and executes the refutation, invariant, recurrence and inequality cases in both default and automatic negotiation modes. The extracted test build also passed its central workflow. This is executed local interoperability evidence, rather than official certification or a live Alexa+ connection.
+Acceptance tests compare shortcuts and orbit values with independent direct computations, check discovery on two recurrence families, preserve inconclusive search limits, reject forged evidence, verify restart persistence and concurrent-write conflicts, and exercise MCP resources and transport. The pinned official MCP client 2.3.1 discovers all ten tools and executes the full investigation through check, discovery, trace, replay, resource resumption and export in both legacy and automatic negotiation modes. Current executed evidence is retained under `evidence/`. This is local interoperability evidence, not official certification or a live Alexa+ connection.
 
 Review the [actual test output](https://github.com/KD-code-99/proofdesk/blob/codex/amazon-proofdesk/evidence/tests.txt), [official SDK interoperability results](https://github.com/KD-code-99/proofdesk/blob/codex/amazon-proofdesk/evidence/official-sdk-interop.json), and [complete v0.1.1 test build](https://github.com/KD-code-99/proofdesk/releases/download/v0.1.1/proofdesk-test-build.zip). Extract the build and run `python -B -m proofdesk` with Python 3.12 or newer; open `http://127.0.0.1:4186`. To run acceptance tests, use `python -B -m unittest discover -s tests -v`.
 
@@ -40,7 +42,7 @@ I am the solo entrant. Codex assisted with implementation, tests and documentati
 
 ## Limitations and next steps
 
-This is bounded mathematical software, not a general theorem prover. The web interface is an explicitly simulated Alexa+ experience. A public deployment needs authentication; the local demo does not claim a live Alexa connection. The next product step is an authenticated deployment that preserves structured verdicts, domain guards and downloadable evidence through the assistant interaction.
+This is bounded mathematical software. Search uses a chosen denominator, a numerator degree of 1–3, and at most 32 certificate checks; failure within that template is inconclusive. Finite traces illustrate behavior rather than prove a uniform identity. Digests do not establish authorship. An authenticated deployment and a production assistant integration remain future work. Product feedback and observed local development friction are detailed in [docs/product-feedback.md](docs/product-feedback.md); no untested Amazon service behavior is claimed.
 
 ## Additional Open Source mini challenge contribution
 
